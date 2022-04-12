@@ -1,11 +1,8 @@
 from sched import scheduler
 from sys import stderr
-from time import monotonic, sleep
+from time import monotonic
 from json import dumps
 
-# TODO: Increase reliability of playing back a set of events. This can be done
-# by removing redundant events in the event list.
-# Possible implementation? if iter.state is iter.next().state, remove iter.next()
 
 def record(inputs, outputs=[], delay=0):
     '''
@@ -108,4 +105,21 @@ def playback(outputs, events):
     stderr.write('Playing back events...\n')
     myScheduler.run()
     stderr.write('Finished\n')
+
+def compress(events):
+    '''
+    Takes a set of events and removes redudant ones. I.e. for any given
+    sequential pair of events, if the share the same state, then the latter
+    will be removed.
+    '''
+    if (len(events) == 0):
+        return []
+
+    unique_events = events[0:1]
+
+    for event in events:
+        if event['states'] != unique_events[-1]['states']:
+            unique_events.append(event)
+
+    return unique_events
 

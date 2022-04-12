@@ -1,8 +1,6 @@
-from Recorder import record, playback
+from Recorder import record, playback, compress
 from ReadableGPIO import ReadableGPIO
 from WritableGPIO import WritableGPIO
-from gpiozero import GPIODevice
-from json import dumps
 
 def main():
     '''
@@ -12,6 +10,7 @@ def main():
     outputs = [WritableGPIO(27)]
 
     events = record(inputs, outputs=outputs)
+    events = compress(events)
     playback(outputs, events)
 
 if __name__ == '__main__':
