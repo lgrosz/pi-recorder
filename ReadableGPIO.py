@@ -1,11 +1,11 @@
 from gpiozero import InputDevice
 
 class ReadableGPIO:
-    def __init__(self, pin, pullup=False):
+    def __init__(self, pin, pull_up=False):
         '''
         Creates a recordable gpio at `pin`
         '''
-        self.device = InputDevice(pin, pull_up=pullup)
+        self.device = InputDevice(pin, pull_up=pull_up)
 
     def read(self):
         '''
